@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f5">
+  <meta name="description" content="Stress-test your decision before you make it. Challenge assumptions, uncover risks, and explore what could happen before you commit.">
+  <title>LifeProof — Decision Stress Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="LifeProof home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><path d="M5 14.4 11 20l12-12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2.8a11.2 11.2 0 1 0 11.2 11.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span>LifeProof</span></a>
+      <div class="header-meta"><span class="status-dot"></span><span id="mode-label">Private by design</span></div>
+    </header>
+
+    <main id="main-content">
+      <section id="form-screen" class="intro-section" aria-labelledby="hero-title">
+        <div class="eyebrow"><span class="eyebrow-line"></span>DECISION STRESS TEST</div>
+        <h1 id="hero-title">Stress-test your decision<br><span>before you make it.</span></h1>
+        <p class="intro-copy">LifeProof challenges your assumptions, uncovers hidden risks, and explores what could happen before you commit.</p>
+
+        <div id="demo-banner" class="demo-banner" hidden>
+          <div class="demo-icon" aria-hidden="true">i</div>
+          <div><strong>Demo Mode</strong><span>Live AI analysis is not configured. Explore a sample decision stress test.</span></div>
+          <button id="demo-button" class="text-button" type="button">View example <span aria-hidden="true">↗</span></button>
+        </div>
+
+        <form id="decision-form" class="decision-form" novalidate>
+          <div class="field-group">
+            <label for="decision">What decision are you considering?<span class="required-mark" aria-label="required">*</span></label>
+            <textarea id="decision" name="decision" rows="3" maxlength="5000" required placeholder="I’m considering leaving my current job to join an early-stage startup…"></textarea>
+            <div class="field-foot"><span class="field-hint">Share only what you’re comfortable sharing.</span><span class="counter" id="decision-counter">0 / 5000</span></div>
+          </div>
+          <div class="field-group">
+            <label for="priorities">What matters most to you?</label>
+            <textarea id="priorities" name="priorities" rows="2" maxlength="2000" placeholder="Financial stability, career growth, learning, family, location…"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="worry">What are you most worried about? <span class="optional">OPTIONAL</span></label>
+            <textarea id="worry" name="worry" rows="2" maxlength="2000" placeholder="I’m worried I might regret leaving…"></textarea>
+          </div>
+          <div id="form-error" class="form-error" role="alert" hidden></div>
+          <button id="submit-button" class="primary-button" type="submit"><span>Stress-Test My Decision</span><span class="button-arrow" aria-hidden="true">→</span></button>
+          <p class="advice-note"><span aria-hidden="true">◇</span> LifeProof provides decision support, not professional advice.</p>
+        </form>
+        <div class="privacy-note"><span class="lock-icon" aria-hidden="true">⌑</span><span>Your decision is processed for this analysis and is not stored by LifeProof.</span></div>
+      </section>
+
+      <section id="loading-screen" class="loading-screen" aria-live="polite" hidden>
+        <div class="loader-mark"><span></span><span></span><span></span></div>
+        <p class="eyebrow">THINKING IT THROUGH</p>
+        <h2>Looking at this from<br>every angle.</h2>
+        <p>Finding assumptions, testing scenarios, and weighing what matters to you.</p>
+      </section>
+
+      <section id="results-screen" class="results-screen" hidden aria-labelledby="results-heading">
+        <div class="results-topline"><button id="back-button" class="back-button" type="button"><span aria-hidden="true">←</span> New stress test</button><span id="result-mode" class="mode-pill"></span></div>
+        <div class="results-heading-wrap"><div class="eyebrow"><span class="eyebrow-line"></span>YOUR DECISION REVIEW</div><h1 id="results-heading">A clearer view<br><span>starts here.</span></h1><p id="decision-summary" class="summary-copy"></p></div>
+        <div id="advice-banner" class="advice-banner" hidden><span class="advice-symbol" aria-hidden="true">!</span><p>This decision may benefit from professional guidance. The analysis below is for reflection and does not replace advice from a qualified professional.</p></div>
+        <div class="readiness-card"><div class="readiness-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17.5 9 12l3.5 3 7.5-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6H20v4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="readiness-main"><span class="section-kicker">DECISION READINESS</span><h2 id="readiness-level"></h2><p id="readiness-rationale"></p></div><span class="qualitative-tag">QUALITATIVE<br>ASSESSMENT</span></div>
+        <div class="results-grid">
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">01</span><div><h2>Assumptions to challenge</h2><p>Beliefs that may be shaping your view of this decision.</p></div></div><div id="assumptions-list" class="card-grid"></div></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">02</span><div><h2>Hidden risks</h2><p>Potential downsides and ways to make them more manageable.</p></div></div><div id="risks-list" class="card-grid"></div></section>
+          <section class="result-section"><div class="section-heading"><span class="section-number">03</span><div><h2>Arguments for</h2><p>The strongest case in favor.</p></div></div><ul id="for-list" class="argument-list positive"></ul></section>
+          <section class="result-section"><div class="section-heading"><span class="section-number">04</span><div><h2>Arguments against</h2><p>The strongest case for caution.</p></div></div><ul id="against-list" class="argument-list caution"></ul></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">05</span><div><h2>Alternative paths</h2><p>Other ways to honor what matters to you.</p></div></div><div id="alternatives-list" class="alternative-grid"></div></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">06</span><div><h2>What if?</h2><p>Three plausible futures, each with its own uncertainty.</p></div></div><div id="scenarios-list" class="scenario-grid"></div></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">07</span><div><h2>Before you decide</h2><p>Questions worth answering or verifying.</p></div></div><ol id="questions-list" class="question-list"></ol></section>
+        </div>
+        <div class="uncertainty-note"><span class="uncertainty-icon" aria-hidden="true">∿</span><p id="uncertainty-copy"></p></div>
+        <div class="results-actions"><button id="again-button" class="primary-button" type="button"><span>Stress-Test Again</span><span class="button-arrow" aria-hidden="true">→</span></button><button id="start-over-button" class="secondary-button" type="button">Start Over</button></div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>LifeProof is an AI decision-support tool. It can make mistakes and should not replace qualified professional advice for medical, legal, financial, or other high-impact decisions.</p><span>THOUGHTFUL DECISIONS, BETTER TESTED.</span></footer>
+  </div>
+</body>
+</html>
