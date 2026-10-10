@@ -49,7 +49,7 @@
           <button id="submit-button" class="primary-button" type="submit"><span>Stress-Test My Decision</span><span class="button-arrow" aria-hidden="true">→</span></button>
           <p class="advice-note"><span aria-hidden="true">◇</span> LifeProof provides decision support, not professional advice.</p>
         </form>
-        <div class="privacy-note"><span class="lock-icon" aria-hidden="true">⌑</span><span>Your decision is processed for this analysis and is not stored by LifeProof.</span></div>
+        <div class="privacy-note"><span class="lock-icon" aria-hidden="true">⌑</span><span>Live analysis is sent to OpenAI and is not stored by LifeProof. Avoid names or details you don’t need to share.</span></div>
       </section>
 
       <section id="loading-screen" class="loading-screen" aria-live="polite" hidden>
@@ -61,20 +61,30 @@
 
       <section id="results-screen" class="results-screen" hidden aria-labelledby="results-heading">
         <div class="results-topline"><button id="back-button" class="back-button" type="button"><span aria-hidden="true">←</span> New stress test</button><span id="result-mode" class="mode-pill"></span></div>
-        <div class="results-heading-wrap"><div class="eyebrow"><span class="eyebrow-line"></span>YOUR DECISION REVIEW</div><h1 id="results-heading">A clearer view<br><span>starts here.</span></h1><p id="decision-summary" class="summary-copy"></p></div>
-        <div id="advice-banner" class="advice-banner" hidden><span class="advice-symbol" aria-hidden="true">!</span><p>This decision may benefit from professional guidance. The analysis below is for reflection and does not replace advice from a qualified professional.</p></div>
-        <div class="readiness-card"><div class="readiness-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17.5 9 12l3.5 3 7.5-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6H20v4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="readiness-main"><span class="section-kicker">DECISION READINESS</span><h2 id="readiness-level"></h2><p id="readiness-rationale"></p></div><span class="qualitative-tag">QUALITATIVE<br>ASSESSMENT</span></div>
+        <div class="results-heading-wrap"><div class="eyebrow"><span class="eyebrow-line"></span>YOUR DECISION REVIEW</div><h1 id="results-heading" tabindex="-1">A clearer view<br><span>starts here.</span></h1><span class="section-kicker summary-kicker">01 · DECISION SUMMARY</span><p id="decision-summary" class="summary-copy"></p></div>
+        <div id="advice-banner" class="advice-banner" hidden><span class="advice-symbol" aria-hidden="true">!</span><p id="advice-message">This decision may benefit from professional guidance. The analysis below is for reflection and does not replace advice from a qualified professional.</p></div>
         <div class="results-grid">
-          <section class="result-section full-width"><div class="section-heading"><span class="section-number">01</span><div><h2>Assumptions to challenge</h2><p>Beliefs that may be shaping your view of this decision.</p></div></div><div id="assumptions-list" class="card-grid"></div></section>
-          <section class="result-section full-width"><div class="section-heading"><span class="section-number">02</span><div><h2>Hidden risks</h2><p>Potential downsides and ways to make them more manageable.</p></div></div><div id="risks-list" class="card-grid"></div></section>
-          <section class="result-section"><div class="section-heading"><span class="section-number">03</span><div><h2>Arguments for</h2><p>The strongest case in favor.</p></div></div><ul id="for-list" class="argument-list positive"></ul></section>
-          <section class="result-section"><div class="section-heading"><span class="section-number">04</span><div><h2>Arguments against</h2><p>The strongest case for caution.</p></div></div><ul id="against-list" class="argument-list caution"></ul></section>
-          <section class="result-section full-width"><div class="section-heading"><span class="section-number">05</span><div><h2>Alternative paths</h2><p>Other ways to honor what matters to you.</p></div></div><div id="alternatives-list" class="alternative-grid"></div></section>
-          <section class="result-section full-width"><div class="section-heading"><span class="section-number">06</span><div><h2>What if?</h2><p>Three plausible futures, each with its own uncertainty.</p></div></div><div id="scenarios-list" class="scenario-grid"></div></section>
-          <section class="result-section full-width"><div class="section-heading"><span class="section-number">07</span><div><h2>Before you decide</h2><p>Questions worth answering or verifying.</p></div></div><ol id="questions-list" class="question-list"></ol></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">02</span><div><h2>Key assumptions</h2><p>Beliefs that may be shaping your view of this decision.</p></div></div><div id="assumptions-list" class="card-grid"></div></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">03</span><div><h2>Hidden risks</h2><p>Potential downsides and ways to make them more manageable.</p></div></div><div id="risks-list" class="card-grid"></div></section>
+          <section class="result-section"><div class="section-heading"><span class="section-number">04</span><div><h2>Arguments FOR</h2><p>The strongest case in favor.</p></div></div><ul id="for-list" class="argument-list positive"></ul></section>
+          <section class="result-section"><div class="section-heading"><span class="section-number">05</span><div><h2>Arguments AGAINST</h2><p>The strongest case for caution.</p></div></div><ul id="against-list" class="argument-list caution"></ul></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">06</span><div><h2>Alternative options</h2><p>Other paths that could honor what matters to you.</p></div></div><div id="alternatives-list" class="alternative-grid"></div></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">07</span><div><h2>What-if scenarios</h2><p>Three plausible futures, each with its own uncertainty.</p></div></div><div id="scenarios-list" class="scenario-grid"></div></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">08</span><div><h2>Missing information</h2><p>Important facts to clarify before weighing the tradeoffs.</p></div></div><ol id="missing-list" class="question-list"></ol></section>
+          <section class="result-section full-width"><div class="section-heading"><span class="section-number">09</span><div><h2>Questions before acting</h2><p>Questions worth answering or verifying.</p></div></div><ol id="questions-list" class="question-list"></ol></section>
         </div>
-        <div class="uncertainty-note"><span class="uncertainty-icon" aria-hidden="true">∿</span><p id="uncertainty-copy"></p></div>
+        <div class="readiness-card"><div class="readiness-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17.5 9 12l3.5 3 7.5-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6H20v4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="readiness-main"><span class="section-kicker">10 · DECISION READINESS</span><h2 id="readiness-level"></h2><p id="readiness-rationale"></p></div><span class="qualitative-tag">QUALITATIVE<br>ASSESSMENT</span></div>
+        <div class="uncertainty-note"><span class="uncertainty-icon" aria-hidden="true">∿</span><div><span class="section-kicker uncertainty-title">11 · UNCERTAINTY</span><p id="uncertainty-copy"></p></div></div>
         <div class="results-actions"><button id="again-button" class="primary-button" type="button"><span>Stress-Test Again</span><span class="button-arrow" aria-hidden="true">→</span></button><button id="start-over-button" class="secondary-button" type="button">Start Over</button></div>
+      </section>
+
+      <section id="safety-screen" class="safety-screen" hidden aria-labelledby="safety-heading">
+        <div class="safety-mark" aria-hidden="true">!</div>
+        <p class="eyebrow"><span class="eyebrow-line"></span>URGENT MEDICAL GUIDANCE</p>
+        <h1 id="safety-heading" tabindex="-1">Seek emergency medical help now.</h1>
+        <p id="safety-message" class="safety-message" role="alert"></p>
+        <p class="safety-limit">LifeProof cannot evaluate symptoms, diagnose a condition, or replace emergency medical care.</p>
+        <button id="safety-start-over" class="secondary-button" type="button">Start another decision</button>
       </section>
     </main>
     <footer class="site-footer"><p>LifeProof is an AI decision-support tool. It can make mistakes and should not replace qualified professional advice for medical, legal, financial, or other high-impact decisions.</p><span>THOUGHTFUL DECISIONS, BETTER TESTED.</span></footer>

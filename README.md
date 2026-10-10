@@ -16,7 +16,7 @@ LifeProof gives people a structured way to examine a decision from multiple angl
 2. The browser sends the information to the app's server endpoint over HTTPS in deployment.
 3. The server calls the OpenAI Chat Completions API using a JSON Schema response format.
 4. The browser renders the structured analysis. LifeProof does not persist decision content.
-5. Without an OpenAI key, the user can explicitly open a representative sample in Demo Mode. It is labeled as an example and is never represented as a live AI response.
+5. Without an OpenAI key, the user can explicitly open the representative startup-job example in Demo Mode. It is labeled as an example and is never represented as a live AI response.
 
 ## Architecture
 
@@ -38,6 +38,7 @@ OpenAI keys are read only by `server.js` from the process environment. They are 
 
 - The analysis explores multiple perspectives and does not tell the user which option to choose.
 - Future outcomes are described as scenarios with explicit uncertainty, not predictions or guarantees.
+- Current severe chest pain is routed to emergency guidance without calling the AI. The wording follows [MedlinePlus emergency guidance](https://medlineplus.gov/ency/article/003079.htm) to contact the local emergency number; the rule is a limited keyword safeguard, not symptom evaluation.
 - Medical, legal, financial, and other high-impact situations are flagged for qualified professional consultation.
 - Users are asked only for decision context, priorities, and an optional concern. They should omit identifying or sensitive details they do not need to share.
 - The app does not store decision content. OpenAI processes content for live requests; consult the provider's current privacy terms before using the service with sensitive information.
@@ -53,7 +54,14 @@ cd LifeProof
 cp .env.example .env
 ```
 
-Add an OpenAI key to `.env` for live analysis. If it is left blank, run the app in clearly labeled Demo Mode.
+For live analysis, add your OpenAI API key to `.env`:
+
+```dotenv
+OPENAI_API_KEY=your-secret-key
+OPENAI_MODEL=gpt-4o-mini
+```
+
+Keep `.env` private; `.gitignore` excludes it from Git. The key is read by the Node server and never sent to the browser. If `OPENAI_API_KEY` is unset or empty, the app displays Demo Mode and the **View example** button opens a clearly labeled sample. Submitting a custom decision without a key returns a helpful message directing you to the example or to configure live analysis.
 
 ```sh
 npm install
@@ -61,7 +69,7 @@ npm run build
 npm start
 ```
 
-Open <http://localhost:3000>. To check server health, open <http://localhost:3000/api/health>. `npm run build` performs JavaScript syntax checks; the project uses no compile step or runtime dependencies.
+Open <http://localhost:3000>. To check server health, open <http://localhost:3000/api/health>. `npm run build` performs JavaScript syntax checks; the project uses no compile step or runtime dependencies. The decision needs at least 25 characters and five words so the analysis has enough context. Excessively long or unclear entries receive an inline explanation. API errors, malformed results, and timeouts return the user to the form with their text intact.
 
 ## Environment variables
 
@@ -72,15 +80,26 @@ Open <http://localhost:3000>. To check server health, open <http://localhost:300
 | `PORT` | No | HTTP port; defaults to `3000` locally. Render provides its own `PORT`. |
 | `HOST` | No | Bind address; defaults to `0.0.0.0` for Render. Set to `127.0.0.1` for loopback-only local use if desired. |
 
+## Tests and build
+
+Run the automated endpoint tests and production syntax/build check with:
+
+```sh
+npm test
+npm run build
+```
+
+The tests invoke the real `/api/analyze` server request handler in-process and mock the upstream OpenAI response. They cover the promotion-versus-job case, the no-savings resignation case, the severe-chest-pain emergency path, validation, Demo Mode, malformed model output, rate limits, timeouts, and key UI accessibility/contrast requirements. They do not make a live OpenAI request and do not require an API key. `npm run build` checks the server, adapter, frontend, and test JavaScript; there is no bundler or compile step.
+
 ## Deployment
 
 The repository includes `render.yaml`. To deploy:
 
 1. Push this repository to GitHub, GitLab, or another Git provider supported by Render.
 2. In the [Render Dashboard](https://dashboard.render.com/), choose **New → Blueprint**, connect the repository, and review the `lifeproof` web service defined in `render.yaml`.
-3. Set the `OPENAI_API_KEY` secret when prompted. To deploy in Demo Mode, leave it unset if the Blueprint flow allows it, or remove that environment variable from the service after creation. The model defaults to `gpt-4o-mini`.
+3. The Blueprint does not require an OpenAI key. To enable live analysis, add `OPENAI_API_KEY` as a secret in the Render service's Environment settings after creation. Leave it unset for Demo Mode. The model defaults to `gpt-4o-mini`.
 4. Deploy the Blueprint. Render runs `npm install && npm run build`, then `npm start`. The server binds to `0.0.0.0` on Render's `PORT`, and `/api/health` is its health check.
-5. When the first deployment is live, open the service's `https://<service-name>.onrender.com` URL. In the service settings, confirm the `OPENAI_API_KEY` and `OPENAI_MODEL` environment values. Future commits to the connected branch deploy automatically according to the service settings.
+5. When the first deployment is live, open the service's `https://<service-name>.onrender.com` URL. Confirm `OPENAI_MODEL` in the service settings; add `OPENAI_API_KEY` there only if you want live analysis. Future commits to the connected branch deploy automatically according to the service settings.
 
 Alternatively, create a **New → Web Service**, connect the repository, set build command to `npm install && npm run build`, start command to `npm start`, add `OPENAI_API_KEY` and optional `OPENAI_MODEL`, then create the service. Render provides a public `onrender.com` subdomain and supports custom domains. See [Render's Node deployment guide](https://render.com/docs/deploy-node-express-app) and [Blueprint documentation](https://render.com/docs/infrastructure-as-code).
 
@@ -88,10 +107,13 @@ Alternatively, create a **New → Web Service**, connect the repository, set bui
 
 - The model can miss relevant context or produce plausible but incorrect analysis. There is no human review.
 - Results depend on the quality and completeness of the user's description and do not use external research.
+- The urgent chest-pain guard is a narrow keyword heuristic, not a medical triage system. It can miss emergencies or activate on a discussion that is not current. For urgent symptoms, contact emergency services or a qualified clinician directly instead of relying on LifeProof.
+- Professional-guidance notices use both model output and limited keyword checks; they may miss high-impact situations. The app cannot diagnose, interpret law, or provide personalized financial advice.
 - Demo Mode always displays the same illustrative startup-job example.
 - Rate limiting and abuse controls are not implemented; configure service-level protections before broad public exposure.
 - The Jev adapter is an interface only. It returns no substantive Jev evaluation until a supported API/SDK and credentials are available.
 - Live analysis requires network access to OpenAI and a valid key with available API quota.
+- The automated suite uses mocked OpenAI responses; a live model request and public deployment have not been verified by these tests.
 
 ## Future Jev integration
 

@@ -5,7 +5,8 @@
   "description": "An AI-powered Decision Stress Test.",
   "scripts": {
     "start": "node server.js",
-    "build": "node --check server.js && node --check src/jev-adapter.js && node --check public/app.js"
+    "build": "node --check server.js && node --check src/jev-adapter.js && node --check public/app.js && node --check test/decision-analysis.test.js",
+    "test": "node --test"
   },
   "engines": { "node": ">=18" }
 }
